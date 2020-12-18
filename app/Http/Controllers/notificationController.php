@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Notifications;
+use App\Models\User;
+use App\Traits\paging;
+use Illuminate\Support\Facades\Validator;
+use App\Traits\sendresponse;
+
+class notificationController extends Controller
+{
+    use sendresponse, paging;
+
+    public function get()
+    {
+
+        $get = Notifications::where('to_user', auth()->user()->id);
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'get notification successfuly', [], $res["model"], null, $res["count"]);
+    }
+
+    public function store(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+
+            'name '      => 'required',
+            'description' => 'required',
+            'to_user'    => 'required',
+            'from_user'  => 'required'
+        ]);
+        Notifications::create([
+            'type' => 2,
+            'name' => $request->name,
+            'description' => $request->description,
+            'to_user' => $request->to_user,
+            'from_user' => auth()->user()->id,
+            'seen' => 0
+        ]);
+        return $this->sendresponse(200, 'send notification successfuly', [], []);
+    }
+    public function sendall(Request $request)
+    {
+
+        $users = User::select('id')->get();
+        foreach ($users as $user) {
+
+
+            Notifications::create([
+                'type' => 0,
+                'name' => $request->name,
+                'description' => $request->description,
+                'to_user' => $user->id,
+                'from_user' => auth()->user()->id
+
+            ]);
+        }
+        return $this->sendresponse(200, 'send notification to all users successfuly', [], []);
+    }
+}
