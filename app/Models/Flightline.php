@@ -8,10 +8,15 @@ use App\Traits\Uuids;
 
 class Flightline extends Model
 {
-    use HasFactory,Uuids;
+    use HasFactory, Uuids;
 
     protected $fillable = [
-        'name','image',
+        'name', 'image',
         'active'
     ];
+
+    public function getactiveAttribute($val)
+    {
+        return $val == 1 ? true : false;
+    }
 }

@@ -49,13 +49,14 @@ class OrderController extends Controller
   public function store(Request $request)
   {
     $request = $request->json()->all();
+
     $validator = Validator::make($request, [
       'from' => 'required',
       'to' => 'required',
       'cabin' => 'required',
-      'fromdate' => 'required|date',
-      'returndate' => 'required|date',
-      'name' => 'regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
+      'fromdate' => 'required|date|after_or_equal:today',
+      'returndate' => 'required|date|after:fromdate',
+      'passengers.*.name' => 'required|alpha',
       'passengers.*.passport_No' => 'required'
     ]);
     // ['passengers.*.passport_No'=>'required' ]  لان عدنة بل ركوست ارري بداخل ركوست ف لازم نسوي هل طريقة 

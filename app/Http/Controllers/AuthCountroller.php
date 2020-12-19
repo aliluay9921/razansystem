@@ -43,19 +43,22 @@ class AuthCountroller extends Controller
     public function login(Request $request)
     {
         $request = $request->json()->all();
+
         $user = Auth::user();
-        $user->delete();
+        if ($user->UserName == null)
+            $user->delete();
         if (Auth::check(['UserName' => $request['UserName'], 'password' => $request['password']])) {
             Auth::setUser(User::where('UserName', $request['UserName'])->first());
             firbasetokens::where('user_id', $user->id)->delete();
             $user = Auth::user();
-
-            firbasetokens::create([
-                'user_id' => $user->id,
-                'token'   => $request['token']
-            ]);
-            $success['token'] = $user->createToken('myApp')->accessToken;
-            return $this->sendresponse(200, 'login has been successfuly', [], $user, $success['token']);
+            if (isset($request['token'])) {
+                firbasetokens::create([
+                    'user_id' => $user->id,
+                    'token'   => $request['token']
+                ]);
+            }
+            $token = $user->createToken('myApp')->accessToken;
+            return $this->sendresponse(200, 'login has been successfuly', [], $user, $token);
         } else {
             return $this->sendresponse(401, 'Unauthorized', null, null, null);
         }

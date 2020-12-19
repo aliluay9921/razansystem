@@ -12,6 +12,16 @@ use Laravel\Passport\Passport;
 
 class passengersController extends Controller
 {
+    public function get()
+    {
+        $get = Passenger::wherenull('deleted_at');
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'get passengers soft delete successfully', [], $res["model"], null, $res["count"]);
+    }
 
     use sendresponse, Helper, paging;
     public function update(Request $request)
@@ -20,7 +30,7 @@ class passengersController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'id'   => 'required',
-            'name' => 'required|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
+            'name' => 'required|alpha',
             'type' => 'required',
             'gender' => 'required',
             'passport_No' => 'required'

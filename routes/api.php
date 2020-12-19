@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
 
 
-
 route::middleware('auth:api')->group(function () {
     route::post('register', [\App\Http\Controllers\AuthCountroller::class, 'register'])->middleware('guest');
     route::post('login', [\App\Http\Controllers\AuthCountroller::class, 'login']);
+
 
     route::get('alluser', [\App\Http\Controllers\UserController::class, 'alluser'])->middleware('admin');
     route::get('user', [\App\Http\Controllers\UserController::class, 'currentuser']);
@@ -40,8 +40,8 @@ route::middleware('auth:api')->group(function () {
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update'])->middleware('admin');
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
 
-
-    route::get('passengers', [\App\Http\Controllers\passengersController::class, 'getsoft']);
+    route::get('passengers', [\App\Http\Controllers\passengersController::class, 'get']);
+    route::get('passengers_soft', [\App\Http\Controllers\passengersController::class, 'getsoft']);
     route::post('passengers', [\App\Http\Controllers\passengersController::class, 'restore']);
     route::put('passengers', [\App\Http\Controllers\passengersController::class, 'update']);
     route::delete('passengers', [\App\Http\Controllers\passengersController::class, 'delete']);
