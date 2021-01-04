@@ -16,7 +16,7 @@ class flightlineController extends Controller
     public function Get()
     {
 
-        $get = Flightline::select('id', 'name', 'image', 'active', 'created_at');
+        $get = Flightline::select('id', 'name', 'image', 'active', 'created_at')->where('active', 1);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
@@ -27,8 +27,8 @@ class flightlineController extends Controller
     public function store(Request $request)
     {
         $request = $request->json()->all();
-        //   راح يحول الركوست الى array 
-        // $request['image'] واتعامل ويا على انه مصفوفة  
+        //   راح يحول الركوست الى array
+        // $request['image'] واتعامل ويا على انه مصفوفة
         $validator = Validator::make($request, [
             'name' => 'unique:flightlines|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
         ]);
@@ -42,7 +42,6 @@ class flightlineController extends Controller
     }
     public function update(Request $request)
     {
-
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'id'   => 'required',
