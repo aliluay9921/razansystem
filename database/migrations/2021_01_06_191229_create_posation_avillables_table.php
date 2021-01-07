@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountariesTable extends Migration
+class CreatePosationAvillablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCountariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countaries', function (Blueprint $table) {
+        Schema::create('posation_avillables', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code');
-            $table->string('geo');
-            $table->string('NameArbic');
-            $table->string('cityName');
-            $table->string('longName');
+            $table->uuid('countary_id');
+            $table->softDeletes();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateCountariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countaries');
+        Schema::dropIfExists('posation_avillables');
     }
 }

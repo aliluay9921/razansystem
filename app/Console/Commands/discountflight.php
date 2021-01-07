@@ -2,24 +2,26 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Order;
+use Carbon\Carbon;
+
+use App\Models\discount_flight;
 use Illuminate\Console\Command;
 
-class expiration extends Command
+class discountflight extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'order:expire';
+    protected $signature = 'discount:expier';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'expire order everyDay';
+    protected $description = 'discount expier if expire < fromDate ';
 
     /**
      * Create a new command instance.
@@ -38,10 +40,9 @@ class expiration extends Command
      */
     public function handle()
     {
-        // active هنا اذا بي تكت او لا معليه بل اكسباير
-        $get = Order::where('expired', 0)->where('active', 0)->get();
-        foreach ($get as $order) {
-            $order->update(['expired' => 1]);
+        $get = discount_flight::where('expair', '>', Carbon::now())->get();
+        foreach ($get as $flight) {
+            $flight->update(['active' => 0]);
         }
     }
 }

@@ -17,6 +17,8 @@ class CreateFlightplansTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('order_id');
             $table->integer('price');
+            $table->integer('active')->default(1);
+            $table->integer('expired')->default(0);
             $table->uuid('flight_id');
             $table->text('note');
             $table->boolean('selected')->default(false);

@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
-use App\Console\Commands\expiration;
+use App\Console\Commands\discountflight;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\expier_flightplan;
+use App\Console\Commands\expiration;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -14,7 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        expiration::class
+        expiration::class,
+        expier_flightplan::class,
+        discountflight::class
     ];
 
     /**
@@ -27,6 +31,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('order:expire')->daily();
+        $schedule->command('flightplanexpire:expire')->hourly();
+        $schedule->command('discount:expier')->daily();
     }
 
     /**
@@ -36,7 +42,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

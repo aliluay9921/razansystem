@@ -23,6 +23,7 @@ class CountaryController extends Controller
 
     public function store(Request $request)
     {
-        $countary = countary::create($request->all());
+        $request = $request->json()->all();
+        $countary = countary::create($request);
     }
 }

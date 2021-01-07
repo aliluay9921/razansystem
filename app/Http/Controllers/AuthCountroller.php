@@ -26,10 +26,8 @@ class AuthCountroller extends Controller
 
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-        // if user guest 
+        // if user guest
         $user_id = auth()->user()->id;
-
-
         $user = User::find($user_id)->update([
             'FullName' => $request['FullName'],
             'UserName' => $request['UserName'],

@@ -15,7 +15,6 @@ class notificationController extends Controller
 
     public function get()
     {
-
         $get = Notifications::where('to_user', auth()->user()->id);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
@@ -27,8 +26,8 @@ class notificationController extends Controller
 
     public function store(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [
+        $request = $request->json()->all();
+        $validator = Validator::make($request, [
 
             'name '      => 'required',
             'description' => 'required',
@@ -37,9 +36,9 @@ class notificationController extends Controller
         ]);
         Notifications::create([
             'type' => 2,
-            'name' => $request->name,
-            'description' => $request->description,
-            'to_user' => $request->to_user,
+            'name' => $request['name'],
+            'description' => $request['description'],
+            'to_user' => $request['to_user'],
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
@@ -47,16 +46,16 @@ class notificationController extends Controller
     }
     public function sendall(Request $request)
     {
-
+        $request = $request->json()->all();
         $users = User::select('id')->get();
         foreach ($users as $user) {
 
 
             Notifications::create([
                 'type' => 0,
-                'name' => $request->name,
-                'description' => $request->description,
-                'to_user' => $user->id,
+                'name' => $request['name'],
+                'description' => $request['description'],
+                'to_user' => $user['id'],
                 'from_user' => auth()->user()->id
 
             ]);

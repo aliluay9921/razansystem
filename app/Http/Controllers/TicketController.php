@@ -42,9 +42,9 @@ class TicketController extends Controller
     {
 
         $request = $request->json()->all();
-        //   راح يحول الركوست الى array 
-        // $request['image'] واتعامل ويا على انه مصفوفة  
-        // exists:orders,id  هاي تفخص ال اذا موجود او لا  id 
+        //   راح يحول الركوست الى array
+        // $request['image'] واتعامل ويا على انه مصفوفة
+        // exists:orders,id  هاي تفخص ال اذا موجود او لا  id
         $validator = Validator::make($request, [
             'order_id' => 'required|exists:orders,id',
             'ticket_id' => 'required',
