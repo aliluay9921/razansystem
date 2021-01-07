@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\notifications as EventsNotifications;
+use App\Events\NotificationsEvent;
 use Illuminate\Http\Request;
 use App\Models\Notifications;
 use App\Models\User;
 use App\Traits\paging;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\sendresponse;
+use Illuminate\Notifications\Notification;
 
 class notificationController extends Controller
 {
@@ -34,7 +37,10 @@ class notificationController extends Controller
             'to_user'    => 'required',
             'from_user'  => 'required'
         ]);
-        Notifications::create([
+        if ($validator->fails()) {
+            return $this->sendresponse(401, 'error validation', $validator->errors(), []);
+        }
+        $notification =   Notifications::create([
             'type' => 2,
             'name' => $request['name'],
             'description' => $request['description'],
@@ -42,6 +48,8 @@ class notificationController extends Controller
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
+        $get = Notifications::find($notification->id);
+        broadcast(new NotificationsEvent($get, auth()->user()));
         return $this->sendresponse(200, 'send notification successfuly', [], []);
     }
     public function sendall(Request $request)
@@ -49,8 +57,6 @@ class notificationController extends Controller
         $request = $request->json()->all();
         $users = User::select('id')->get();
         foreach ($users as $user) {
-
-
             Notifications::create([
                 'type' => 0,
                 'name' => $request['name'],

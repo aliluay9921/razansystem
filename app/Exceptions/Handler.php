@@ -8,23 +8,28 @@ use App\Traits\sendresponse;
 use Illuminate\Http\Response;
 use Exception;
 
-// هذا يخلي الايرر الي يرجعلك من يصير داخل السستم يرجع بصورة مرتبة ومفهومة 
+// هذا يخلي الايرر الي يرجعلك من يصير داخل السستم يرجع بصورة مرتبة ومفهومة
 
 class Handler extends ExceptionHandler
 {
     use sendresponse;
     protected function prepareResponse($request, Throwable $e)
     {
-        
-        
 
-        if (! $this->isHttpException($e)) {
+
+
+        if (!$this->isHttpException($e)) {
             return $this->sendresponse(
-                500,"error in the server",['error' => [$e->getMessage()]], []);
+                500,
+                "error in the server",
+                ['error' => [$e->getMessage()]],
+                []
+            );
         }
 
         return $this->toIlluminateResponse(
-            $this->renderHttpException($e), $e
+            $this->renderHttpException($e),
+            $e
         );
     }
 
@@ -54,14 +59,14 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        
+
         $this->renderable(function (Exception $e, $request) {
             return $this->sendresponse(
-                500,"error in the server",['error' => [$e->getMessage()]], []);
+                500,
+                "error in the server",
+                ['error' => [$e->getMessage()]],
+                []
+            );
         });
-
     }
-    
-      
-   
 }

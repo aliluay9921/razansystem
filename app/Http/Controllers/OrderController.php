@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationsEvent;
+
 use App\Models\Notifications;
 use App\Models\Order;
 use App\Models\Passenger;
@@ -77,7 +79,7 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id
         ]);
         $employee = User::select('id', 'status')->where('status', 1)->first();
-        Notifications::create([
+        $notification =  Notifications::create([
             'type' => 0,
             'name' => 'انشاء طلب بواسطة مستخم ',
             'description' => 'تم انشاء طلب حجز ',
@@ -86,6 +88,8 @@ class OrderController extends Controller
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
+        $get = Notifications::find($notification->id);
+        broadcast(new NotificationsEvent($get, auth()->user()));
         $passengers = $request['passengers'];
 
         // in the request get array called passengers

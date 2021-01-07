@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Events\NotificationsEvent;
 
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
 route::middleware(['auth:api'])->group(function () {
@@ -56,4 +56,9 @@ route::middleware(['auth:api'])->group(function () {
     route::get('posation', [\App\Http\Controllers\posationController::class, 'get']);
     route::post('posation', [\App\Http\Controllers\posationController::class, 'store'])->middleware('admin');
     route::delete('posation', [\App\Http\Controllers\posationController::class, 'delete'])->middleware('admin');
+});
+
+Route::get('/fire', function () {
+    broadcast(new NotificationsEvent('test', 'it Works'));
+    return 'fired';
 });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationsEvent;
+
 use App\Models\User;
 use App\Models\Flightplan;
 use App\Traits\sendresponse;
@@ -50,14 +52,14 @@ class flightplanController extends Controller
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-        // الركوست اجة بي اكثر من مرة يدخل لازم اسوي لوب عليه حتى اكدر اشغلة 
-        // $employee=User::select('id','status')->where('status',1)->first();     
+        // الركوست اجة بي اكثر من مرة يدخل لازم اسوي لوب عليه حتى اكدر اشغلة
+        // $employee=User::select('id','status')->where('status',1)->first();
         $order = Order::select('user_id')->where('id', $requests[0]['order_id'])->first();
 
         foreach ($requests as $request) {
             $store = Flightplan::create($request);
         }
-        Notifications::create([
+        $notification =  Notifications::create([
             'type'        => 1,
             'name'        => 'رد طلب حجز',
             'description' => 'تم انشاء رد الحجز ',
@@ -66,6 +68,8 @@ class flightplanController extends Controller
             'from_user'     => auth()->user()->id,
             'seen'        => 0
         ]);
+        $get = Notifications::find($notification->id);
+        broadcast(new NotificationsEvent($get, auth()->user()));
         return $this->sendresponse(200, 'insert successfuly Flightpla', [], $store);
     }
 
