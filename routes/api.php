@@ -3,7 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Events\NotificationsEvent;
-
+//TODO:: order retreived by id if it is user not admin.
+//TODO:: اذا سويت كاست فسوي انكليزي و بلحروف صغيره.
+//TODO:: Arabic for country and Airports
+//TODO:: Seed notification please
+//TODO:: ticket by order route not work
+//TODO:: birth_day suggest add to passenger
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
 route::middleware(['auth:api'])->group(function () {
     route::post('register', [\App\Http\Controllers\AuthCountroller::class, 'register'])->middleware('guest');
@@ -14,12 +19,12 @@ route::middleware(['auth:api'])->group(function () {
     route::put('user', [\App\Http\Controllers\UserController::class, 'update']);
     route::delete('user', [\App\Http\Controllers\UserController::class, 'delete'])->middleware('admin');
 
-    route::get('flightline', [\App\Http\Controllers\flightlineController::class, 'Get'])->middleware('admin');
+    route::get('flightline', [\App\Http\Controllers\flightlineController::class, 'Get']); //->middleware('admin');
     route::post('flightline', [\App\Http\Controllers\flightlineController::class, 'store'])->middleware('admin');
     route::put('flightline', [\App\Http\Controllers\flightlineController::class, 'update'])->middleware('admin');
     route::delete('flightline', [\App\Http\Controllers\flightlineController::class, 'delete'])->middleware('admin');
 
-    route::get('order', [\App\Http\Controllers\OrderController::class, 'get'])->middleware('admin');
+    route::get('order', [\App\Http\Controllers\OrderController::class, 'get']);
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
@@ -44,7 +49,7 @@ route::middleware(['auth:api'])->group(function () {
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
 
-    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall'])->middleware('admin');
+    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall']); //->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);
     route::post('ticket', [\App\Http\Controllers\TicketController::class, 'store']);
 
