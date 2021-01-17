@@ -20,7 +20,7 @@ class passengersController extends Controller
         if (!isset($_GET['limit']))
             $_GET['limit'] = 10;
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
-        return $this->sendresponse(200, 'get passengers soft delete successfully', [], $res["model"], null, $res["count"]);
+        return $this->sendresponse(200, 'get passengers successfully', [], $res["model"], null, $res["count"]);
     }
 
     use sendresponse, Helper, paging;

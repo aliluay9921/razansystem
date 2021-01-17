@@ -15,4 +15,7 @@ class Flightplan extends Model
         'flight_id', 'note',
         'selected', 'active'
     ];
+    protected $casts = [
+        "selected" => "boolean"
+    ];
 }

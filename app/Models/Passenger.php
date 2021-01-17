@@ -33,9 +33,9 @@ class Passenger extends Model
     public function gettypeAttribute($val)
     {
         if ($val == 0) {
-            return 'Infant';
+            return 'infant';
         } elseif ($val == 1) {
-            return 'Child';
+            return 'child';
         } else return 'adult';
     }
 }
