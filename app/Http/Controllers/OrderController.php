@@ -48,6 +48,35 @@ class OrderController extends Controller
         return $this->sendresponse(200, 'All Orders', [], $res["model"], null, $res["count"]);
     }
 
+    public function getuser()
+    {
+        $user = auth()->user()->id;
+        $Orders = Order::where('user_id', $user)->with(['passengers' => function ($q) {
+            $q->where('deleted_at', null);
+        }]);
+        if (isset($_GET['id'])) {
+            $Orders->where('id', $_GET['id']);
+        }
+        if (isset($_GET['from'])) {
+            $Orders->where('from', $_GET['from']);
+        }
+        if (isset($_GET['to'])) {
+            $Orders->where('to', $_GET['to']);
+        }
+        if (isset($_GET['fromdate'])) {
+            $Orders->where('fromdate', $_GET['fromdate']);
+        }
+        if (isset($_GET['returndate'])) {
+            $Orders->where('returndate', $_GET['returndate']);
+        }
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($Orders,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'auth Orders', [], $res["model"], null, $res["count"]);
+    }
+
     public function store(Request $request)
     {
         $request = $request->json()->all();

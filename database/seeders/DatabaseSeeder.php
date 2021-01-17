@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ticketseeder::class);
         $this->call(countaryseed::class);
         $this->call(posationseed::class);
+        $this->call(notifyseeder::class);
     }
 }

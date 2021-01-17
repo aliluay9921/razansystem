@@ -16,7 +16,7 @@ class Passenger extends Model
     protected $fillable = [
         'order_id', 'type',
         'name', 'gender',
-        'passport_No', 'picture_passport'
+        'passport_No', 'picture_passport', 'birth_day'
     ];
     protected $dates = ['deleted_at'];
 

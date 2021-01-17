@@ -19,6 +19,7 @@ class CreatePassengersTable extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->integer('type');
+            $table->date('birth_day')->nullable();
             $table->integer('gender');
             $table->string('picture_passport');
             $table->string('passport_No');

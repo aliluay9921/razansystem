@@ -27,10 +27,9 @@ class TicketController extends Controller
         return $this->sendresponse(200, 'get successfully ticket', [], $res["model"], null, $res["count"]);
     }
 
-    public function get(Request $request)
+    public function get()
     {
-        $request = $request->json()->all();
-        $get = ticket::where('order_id',  $request['order_id']);
+        $get = ticket::where('order_id', $_GET['order_id']);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))

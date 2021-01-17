@@ -3,11 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Events\NotificationsEvent;
-//TODO:: order retreived by id if it is user not admin.
-//TODO:: اذا سويت كاست فسوي انكليزي و بلحروف صغيره.
-//TODO:: Arabic for country and Airports
 //TODO:: Seed notification please
-//TODO:: ticket by order route not work
+
 //TODO:: birth_day suggest add to passenger
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
 route::middleware(['auth:api'])->group(function () {
@@ -24,7 +21,8 @@ route::middleware(['auth:api'])->group(function () {
     route::put('flightline', [\App\Http\Controllers\flightlineController::class, 'update'])->middleware('admin');
     route::delete('flightline', [\App\Http\Controllers\flightlineController::class, 'delete'])->middleware('admin');
 
-    route::get('order', [\App\Http\Controllers\OrderController::class, 'get']);
+    route::get('order', [\App\Http\Controllers\OrderController::class, 'get'])->middleware('admin');
+    route::get('order', [\App\Http\Controllers\OrderController::class, 'getuser']);
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
@@ -49,7 +47,7 @@ route::middleware(['auth:api'])->group(function () {
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
 
-    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall']); //->middleware('admin');
+    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall'])->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);
     route::post('ticket', [\App\Http\Controllers\TicketController::class, 'store']);
 

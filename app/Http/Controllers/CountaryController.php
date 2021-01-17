@@ -12,7 +12,7 @@ class CountaryController extends Controller
     use sendresponse, paging;
     public function get(Request $request)
     {
-        $get = countary::select('id', 'code', 'geo', 'cityName', 'longName', 'created_at', 'updated_at');
+        $get = countary::select('id', 'code', 'geo', 'NameArbic', 'cityName', 'longName', 'created_at', 'updated_at');
         if (!$request->has("skip"))
             $request->skip = 0;
         if (!$request->has("limit"))
