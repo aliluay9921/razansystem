@@ -15,8 +15,8 @@ class posation_avillable extends Model
     ];
     protected $dates = ['deleted_at'];
 
-    public function countaries()
+    public function countary()
     {
-        return $this->hasMany('App\Models\Countary', 'countary_id');
+        return $this->belongsTo('App\Models\Countary');
     }
 }
