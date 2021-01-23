@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class countary extends Model
 {
-    use HasFactory,Uuids;
+    use HasFactory, Uuids;
 
     protected $fillable = [
-        'code','geo',
-        'cityName','longName',
+        'code', 'geo', 'NameArbic',
+        'cityName', 'longName',
     ];
-
 }
