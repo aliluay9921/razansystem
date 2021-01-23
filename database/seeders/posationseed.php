@@ -21,18 +21,22 @@ class posationseed extends Seeder
             DB::table('posation_avillables')->insert([
                 'id'                => Uuid::uuid4()->toString(),
                 'countary_id'          => $countary->id,
+                'image' => '\image\download.jfif',
             ]);
             DB::table('posation_avillables')->insert([
                 'id'                => Uuid::uuid4()->toString(),
                 'countary_id'          => $countary->id,
+                'image' => '\image\download.jfif',
             ]);
             DB::table('posation_avillables')->insert([
                 'id'                => Uuid::uuid4()->toString(),
                 'countary_id'          => $countary->id,
+                'image' => '\image\download.jfif',
             ]);
             DB::table('posation_avillables')->insert([
                 'id'                => Uuid::uuid4()->toString(),
                 'countary_id'          => $countary->id,
+                'image' => '\image\download.jfif',
             ]);
         }
     }

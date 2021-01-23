@@ -31,6 +31,7 @@ class posationController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'countary_id'       => 'required|exists:countaries,id',
+            'new_image'         => 'required'
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
