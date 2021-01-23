@@ -27,8 +27,8 @@ class discountController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
 
-            'details '       => 'required|alpha',
-            'flightline_id'  => 'required|exists:flightline,id',
+            'details'       => 'required|alpha',
+            'flightline_id'  => 'required|exists:flightlines,id',
             'discount'       => 'required|numeric',
             'miximum_number' => 'required|numeric',
             'current_user'   => 'required',
@@ -37,7 +37,7 @@ class discountController extends Controller
             'fromdate'       => 'required|date',
             'returndate'     => 'required|date',
             // type => one way or two way
-            'type '          => 'required',
+            'type'          => 'required',
             'from'           => 'required|alpha',
             'to'             => 'required|alpha',
         ]);
