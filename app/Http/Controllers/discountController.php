@@ -14,7 +14,7 @@ class discountController extends Controller
     use sendresponse, paging;
     public function get()
     {
-        $get = discount_flight::select('id', 'details', 'flightline_id', 'discount', 'miximum_number', 'current_user', 'minimum_number', 'expair', 'fromdate', 'returndate', 'type', 'from', 'to');
+        $get = discount_flight::select('id', 'details', 'flightline_id', 'discount', 'miximum_number', 'current_user', 'minimum_number', 'expair', 'fromdate', 'returndate', 'type', 'from', 'to')->with(["flightline"]);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))

@@ -20,4 +20,9 @@ class discount_flight extends Model
         'from', 'to', 'active'
     ];
     protected $dates = ['deleted_at'];
+
+    public function flightline()
+    {
+        return $this->belongsTo('App\Models\Flightline');
+    }
 }
