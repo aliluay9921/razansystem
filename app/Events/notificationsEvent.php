@@ -21,11 +21,10 @@ class NotificationsEvent implements ShouldBroadcast
      * @return void
      */
     public $notify;
-    public $user;
-    public function __construct($notify, $user)
+
+    public function __construct($notify)
     {
         $this->notify = $notify;
-        $this->user = $user;
     }
 
 
@@ -41,7 +40,7 @@ class NotificationsEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notifications' . $this->user->id());
+        return new PrivateChannel('notifications' . auth()->user()->id);
         // return new PresenceChannel('notifications');
     }
 }

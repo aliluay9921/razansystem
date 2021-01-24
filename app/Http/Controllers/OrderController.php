@@ -118,7 +118,7 @@ class OrderController extends Controller
             'seen' => 0
         ]);
         $get = Notifications::find($notification->id);
-        broadcast(new NotificationsEvent($get, auth()->user()));
+        broadcast(new NotificationsEvent($get));
         $passengers = $request['passengers'];
 
         // in the request get array called passengers
