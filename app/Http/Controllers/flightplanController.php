@@ -31,7 +31,7 @@ class flightplanController extends Controller
     public function get()
     {
 
-        $get = Flightplan::where('order_id', $_GET['order_id']);
+        $get = Flightplan::where('order_id', $_GET['order_id'])->with('order');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
