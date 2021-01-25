@@ -66,10 +66,10 @@ class flightplanController extends Controller
             'order_id'    => $requests[0]['order_id'],
             'to_user'    => $order->user_id,
             'from_user'     => auth()->user()->id,
-            'seen'        => 0
+            'seen'  => 0
         ]);
         $get = Notifications::find($notification->id);
-        broadcast(new NotificationsEvent($get, auth()->user()));
+        broadcast(new NotificationsEvent($get));
         return $this->sendresponse(200, 'insert successfuly Flightpla', [], $store);
     }
 

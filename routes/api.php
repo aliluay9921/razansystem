@@ -40,8 +40,6 @@ route::middleware(['auth:api'])->group(function () {
 
     route::post('notifications', [\App\Http\Controllers\notificationController::class, 'store']);
     route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
-
-    route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
     route::post('notificationsbrodcast', [\App\Http\Controllers\notificationController::class, 'sendall'])->middleware('admin');
 
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
