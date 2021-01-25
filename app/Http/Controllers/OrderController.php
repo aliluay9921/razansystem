@@ -21,7 +21,7 @@ class OrderController extends Controller
     {
         $Orders = Order::with(['passengers' => function ($q) {
             $q->where('deleted_at', null);
-        }]);
+        }])->orderBy('created_at', 'DESC');
 
         if (isset($_GET['id'])) {
             $Orders->where('id', $_GET['id']);
@@ -91,14 +91,9 @@ class OrderController extends Controller
             'passengers.*.passport_No' => 'required'
         ]);
         // ['passengers.*.passport_No'=>'required' ]  لان عدنة بل ركوست ارري بداخل ركوست ف لازم نسوي هل طريقة
-
-
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-
-
-
         $order = Order::create([
             'to' => $request['to'],
             'from' => $request['from'],

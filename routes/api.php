@@ -21,8 +21,10 @@ route::middleware(['auth:api'])->group(function () {
     route::put('flightline', [\App\Http\Controllers\flightlineController::class, 'update'])->middleware('admin');
     route::delete('flightline', [\App\Http\Controllers\flightlineController::class, 'delete'])->middleware('admin');
 
-    route::get('order', [\App\Http\Controllers\OrderController::class, 'get'])->middleware('admin');
+    route::get('orderadmin', [\App\Http\Controllers\OrderController::class, 'get']);
     route::get('order', [\App\Http\Controllers\OrderController::class, 'getuser']);
+
+
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
