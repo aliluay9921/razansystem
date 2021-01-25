@@ -18,7 +18,7 @@ class notificationController extends Controller
 
     public function get()
     {
-        $get = Notifications::where('to_user', auth()->user()->id)->with('orders');
+        $get = Notifications::where('to_user', auth()->user()->id)->orderByDesc('created_at')->with('orders');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
@@ -31,7 +31,6 @@ class notificationController extends Controller
     {
         $request = $request->json()->all();
         $validator = Validator::make($request, [
-
             'name '      => 'required',
             'description' => 'required',
             'to_user'    => 'required',
