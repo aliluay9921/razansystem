@@ -8,13 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notifications extends Model
 {
-    use HasFactory,Uuids;
+    use HasFactory, Uuids;
 
     protected $fillable = [
-        'type','name',
-        'description','order_id',
-        'to_user','from_user',
+        'type', 'name',
+        'description', 'order_id',
+        'to_user', 'from_user',
         'seen',
     ];
 
+    public function orders()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
+    }
 }
