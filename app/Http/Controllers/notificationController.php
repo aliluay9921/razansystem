@@ -18,7 +18,7 @@ class notificationController extends Controller
 
     public function get()
     {
-        $get = Notifications::where('to_user', auth()->user()->id)->with('orders');
+        $get = Notifications::where('to_user', auth()->user()->id)->with('order');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))

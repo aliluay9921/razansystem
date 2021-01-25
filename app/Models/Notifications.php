@@ -17,7 +17,7 @@ class Notifications extends Model
         'seen',
     ];
 
-    public function orders()
+    public function order()
     {
         return $this->belongsTo('App\Models\Order', 'order_id');
     }
