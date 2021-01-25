@@ -65,8 +65,6 @@ class flightplanController extends Controller
             'description' => 'تم انشاء رد الحجز ',
             'order_id'    => $requests[0]['order_id'],
             'to_user'    => $order->user_id,
-            'Time_to_go' => $request['Time_to_go'],
-            'Arrival_time' => $request['Arrival_time'],
             'from_user'     => auth()->user()->id,
             'seen'  => 0
         ]);
