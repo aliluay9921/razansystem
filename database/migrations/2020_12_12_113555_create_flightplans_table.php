@@ -19,6 +19,8 @@ class CreateFlightplansTable extends Migration
             $table->integer('price');
             $table->integer('active')->default(1);
             $table->integer('expired')->default(0);
+            $table->dateTime('Time_to_go');
+            $table->dateTime('Arrival_time');
             $table->uuid('flight_id');
             $table->text('note');
             $table->boolean('selected')->default(false);

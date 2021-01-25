@@ -13,7 +13,7 @@ class Flightplan extends Model
     protected $fillable = [
         'order_id', 'price',
         'flight_id', 'note',
-        'selected', 'active'
+        'selected', 'active', 'Time_to_go', 'Arrival_time'
     ];
     protected $casts = [
         "selected" => "boolean"
