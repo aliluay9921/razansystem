@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationsEvent;
 use Exception;
 use App\Models\Order;
 use App\Models\ticket;
 use App\Models\Flightplan;
+use App\Models\Notifications;
 use App\Traits\paging;
 use App\Traits\sendresponse;
 use Illuminate\Http\Request;
@@ -60,7 +62,20 @@ class TicketController extends Controller
                 'order_id' => $request['order_id'],
                 'flightline_id' => $flightplan->flight_id
             ]);
+            $create = ticket::find($create->id);
             $order->update(['active' => 1]);
+            $user_id = $order->user_id;
+            $notification =  Notifications::create([
+                'type' => 4,
+                'name' => 'تم انشاء تذكرة',
+                'description' => 'ملاحظات',
+                'order_id' => $order->id,
+                'to_user' => $user_id,
+                'from_user' => auth()->user()->id,
+                'seen' => 0
+            ]);
+            $get = Notifications::find($notification->id);
+            broadcast(new NotificationsEvent($get));
             return $this->sendresponse(200, 'insert successfully ticket', [], $create);
         } else {
             return $this->sendresponse(401, 'this order has ticket ', [], []);

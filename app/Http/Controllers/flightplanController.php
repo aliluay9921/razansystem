@@ -75,10 +75,20 @@ class flightplanController extends Controller
 
     public function selected(Request $request)
     {
-
-        $select = Flightplan::find($request->id)->update([
-            'selected' => 'true'
-        ]);
-        return $this->sendresponse(200, 'selected  successfuly Flightpla', [], $select);
+        if (Flightplan::where("id", $request->id)->where("selected", true)->get()->count() == 0) {
+            $select = Flightplan::find($request->id);
+            $select->update([
+                'selected' => true
+            ]);
+            $notification = $select->order->notifications()->where("type", 1)->first();
+            $notification->update(
+                [
+                    'seen' => true
+                ]
+            );
+            return $this->sendresponse(200, 'selected  successfuly Flightpla', [],  $notification);
+        } else {
+            return $this->sendresponse(300, 'Flight plan already selected', ["error" => ["Flight plan already selected"]], []);
+        }
     }
 }

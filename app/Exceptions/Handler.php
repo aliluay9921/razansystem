@@ -18,14 +18,14 @@ class Handler extends ExceptionHandler
 
 
 
-        if (!$this->isHttpException($e)) {
-            return $this->sendresponse(
-                500,
-                "error in the server",
-                ['error' => [$e->getMessage()]],
-                []
-            );
-        }
+        // if (!$this->isHttpException($e)) {
+        //     return $this->sendresponse(
+        //         500,
+        //         "error in the server",
+        //         ['error' => [$e->getMessage()]],
+        //         []
+        //     );
+        // }
 
         return $this->toIlluminateResponse(
             $this->renderHttpException($e),
@@ -57,16 +57,16 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
-    {
+    // public function register()
+    // {
 
-        $this->renderable(function (Exception $e, $request) {
-            return $this->sendresponse(
-                500,
-                "error in the server",
-                ['error' => [$e->getMessage()]],
-                []
-            );
-        });
-    }
+    //     $this->renderable(function (Exception $e, $request) {
+    //         return $this->sendresponse(
+    //             500,
+    //             "error in the server",
+    //             ['error' => [$e->getMessage()]],
+    //             []
+    //         );
+    //     });
+    // }
 }

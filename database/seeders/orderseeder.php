@@ -15,39 +15,39 @@ class orderseeder extends Seeder
      * @return void
      */
     public function run()
-    {   
-        $users=User::select('id')->get();
-        foreach($users as $user){
-        DB::table('orders')->insert([
-            'id'                => Uuid::uuid4()->toString(),
-            'from'              => 'baghdad ',          
-            'to'                =>'istanpul',
-            'cabin'             =>1,
-            'user_id'           =>$user->id
-            
-            
-        ]);
+    {
+        // $users=User::select('id')->get();
+        // foreach($users as $user){
+        // DB::table('orders')->insert([
+        //     'id'                => Uuid::uuid4()->toString(),
+        //     'from'              => 'baghdad ',
+        //     'to'                =>'istanpul',
+        //     'cabin'             =>1,
+        //     'user_id'           =>$user->id
 
-        DB::table('orders')->insert([
-            'id'                => Uuid::uuid4()->toString(),
-            'from'              => 'tahran ',          
-            'to'                =>'germany',
-            'cabin'             =>1,
-            'user_id'           =>$user->id
 
-            
-            
-        ]);
-        DB::table('orders')->insert([
-            'id'                => Uuid::uuid4()->toString(),
-            'from'              => 'basra ',          
-            'to'                =>'istanpul',
-            'cabin'             =>1,
+        // ]);
 
-            'user_id'           =>$user->id
+        // DB::table('orders')->insert([
+        //     'id'                => Uuid::uuid4()->toString(),
+        //     'from'              => 'tahran ',
+        //     'to'                =>'germany',
+        //     'cabin'             =>1,
+        //     'user_id'           =>$user->id
 
-            
-        ]);
+
+
+        // ]);
+        // DB::table('orders')->insert([
+        //     'id'                => Uuid::uuid4()->toString(),
+        //     'from'              => 'basra ',
+        //     'to'                =>'istanpul',
+        //     'cabin'             =>1,
+
+        //     'user_id'           =>$user->id
+
+
+        // ]);
+        // }
     }
-}
 }

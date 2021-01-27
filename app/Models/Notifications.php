@@ -16,9 +16,22 @@ class Notifications extends Model
         'to_user', 'from_user',
         'seen',
     ];
+    protected $appends = ['flight_line'];
 
+    public function getFlightLineAttribute()
+    {
+        $order = Order::find($this->attributes['order_id']);
+        if ($order == null)
+            return null;
+        $flightplan = $order->flightplans()->where('selected', true)->first();
+        if ($flightplan == null) return null;
+        return  Flightline::find($flightplan->flight_id);
+    }
     public function order()
     {
         return $this->belongsTo('App\Models\Order', 'order_id');
     }
+    protected $casts = [
+        'seen' => 'boolean'
+    ];
 }

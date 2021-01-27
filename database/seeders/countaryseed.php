@@ -19,8 +19,8 @@ class countaryseed extends Seeder
             'id'                => Uuid::uuid4()->toString(),
             'code'              => 'BGW',
             'geo'               => 'WGB',
-            'cityName'          => "baghdad",
-            'longName'          => 'iraq',
+            'cityName'          => "Baghdad",
+            'longName'          => 'Iraq',
             'NameArbic'         => 'العراق'
         ]);
         DB::table('countaries')->insert([
@@ -28,15 +28,15 @@ class countaryseed extends Seeder
             'code'              => 'EGP',
             'geo'               => 'Cairo',
             'cityName'          => "Cairo",
-            'longName'          => 'EGYPT',
+            'longName'          => 'Egypt',
             'NameArbic'         => 'مصر'
         ]);
         DB::table('countaries')->insert([
             'id'                => Uuid::uuid4()->toString(),
             'code'              => 'USA',
             'geo'               => 'USA',
-            'cityName'          => "washnton",
-            'longName'          => 'Amirca',
+            'cityName'          => "NEW YORK",
+            'longName'          => 'United States',
             'NameArbic'         => 'امريكا'
         ]);
     }

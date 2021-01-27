@@ -60,7 +60,9 @@ route::middleware(['auth:api'])->group(function () {
     route::post('posation', [\App\Http\Controllers\posationController::class, 'store'])->middleware('admin');
     route::delete('posation', [\App\Http\Controllers\posationController::class, 'delete'])->middleware('admin');
 });
-
+// Route::get('all', function () {
+//     return response()->json(\App\Models\Notifications::get(), 200);
+// });
 Route::get('/fire', function () {
     broadcast(new NotificationsEvent('test', 'it Works'));
     return 'fired';

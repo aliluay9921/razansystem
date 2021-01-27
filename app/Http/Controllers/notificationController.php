@@ -19,12 +19,14 @@ class notificationController extends Controller
     public function get()
     {
         $get = Notifications::where('to_user', auth()->user()->id)->orderByDesc('created_at')->with('order');
+
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
             $_GET['limit'] = 10;
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
-        return $this->sendresponse(200, 'get notification successfuly', [], $res["model"], null, $res["count"]);
+
+        return $this->sendresponse(200, 'get notification successfuly', [], $res["model"]->append('flight_line'), null, $res["count"]);
     }
 
     public function store(Request $request)
@@ -57,10 +59,10 @@ class notificationController extends Controller
         $users = User::select('id')->get();
         foreach ($users as $user) {
             Notifications::create([
-                'type' => 0,
+                'type' => 3,
                 'name' => $request['name'],
                 'description' => $request['description'],
-                'to_user' => $user['id'],
+                'to_user' => $user->id,
                 'from_user' => auth()->user()->id
 
             ]);
