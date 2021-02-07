@@ -26,6 +26,16 @@ class notificationController extends Controller
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
         return $this->sendresponse(200, 'get notification successfuly', [], $res["model"], null, $res["count"]);
     }
+    public function getemployee()
+    {
+        $get = Notifications::where('type', 0)->orderByDesc('created_at')->with('order', 'user');
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'get notification employee successfuly', [], $res["model"], null, $res["count"]);
+    }
 
     public function store(Request $request)
     {

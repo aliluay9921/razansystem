@@ -21,4 +21,8 @@ class Notifications extends Model
     {
         return $this->belongsTo('App\Models\Order', 'order_id');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'from_user');
+    }
 }

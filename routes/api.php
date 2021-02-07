@@ -7,6 +7,8 @@ use App\Events\NotificationsEvent;
 
 //TODO:: birth_day suggest add to passenger
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
+route::post('loginadmin', [\App\Http\Controllers\AuthCountroller::class, 'loginadmin']);
+
 route::middleware(['auth:api'])->group(function () {
     route::post('register', [\App\Http\Controllers\AuthCountroller::class, 'register'])->middleware('guest');
     route::post('login', [\App\Http\Controllers\AuthCountroller::class, 'login']);
@@ -42,6 +44,7 @@ route::middleware(['auth:api'])->group(function () {
 
     route::post('notifications', [\App\Http\Controllers\notificationController::class, 'store']);
     route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
+    route::get('notifications_employee', [\App\Http\Controllers\notificationController::class, 'getemployee'])->middleware('admin');
     route::post('notificationsbrodcast', [\App\Http\Controllers\notificationController::class, 'sendall'])->middleware('admin');
 
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);

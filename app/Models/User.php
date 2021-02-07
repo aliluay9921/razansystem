@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\firbasetokens', 'user_id');
     }
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\Notifications', 'from_user');
+    }
 }
