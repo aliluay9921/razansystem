@@ -50,4 +50,8 @@ class orderseeder extends Seeder
         // ]);
         // }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 06db08f74f95805b6251d3296f7dfdb1827f2a75

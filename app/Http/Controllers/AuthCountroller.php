@@ -81,4 +81,16 @@ class AuthCountroller extends Controller
         ]);
         return $this->sendresponse(200, 'user geust created', null, [$user->id], $token);
     }
+
+    public function loginadmin(Request $request)
+    {
+        $request = $request->json()->all();
+        if (Auth::attempt(['UserName' => $request['UserName'], 'password' => $request['password']])) {
+            $user = Auth::user();
+            $token = $user->createToken('myApp')->accessToken;
+            return $this->sendresponse(200, 'login has been successfuly', [], $user, $token);
+        } else {
+            return $this->sendresponse(401, 'Unauthorized', null, null, null);
+        }
+    }
 }
