@@ -31,15 +31,12 @@ class Notifications extends Model
     {
         return $this->belongsTo('App\Models\Order', 'order_id');
     }
-<<<<<<< HEAD
     protected $casts = [
         'seen' => 'boolean'
     ];
-}
-=======
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'from_user');
     }
 }
->>>>>>> 06db08f74f95805b6251d3296f7dfdb1827f2a75

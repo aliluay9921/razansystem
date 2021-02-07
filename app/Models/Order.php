@@ -35,4 +35,12 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\Notifications', 'order_id');
     }
+    public function fromLocation()
+    {
+        return $this->belongsTo('App\Models\countary', 'from');
+    }
+    public function toLocation()
+    {
+        return $this->belongsTo('App\Models\countary', 'to');
+    }
 }
