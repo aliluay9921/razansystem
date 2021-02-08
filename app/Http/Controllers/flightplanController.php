@@ -47,7 +47,9 @@ class flightplanController extends Controller
             '*.order_id'    => 'required',
             '*.price'       => 'required|Numeric',
             '*.flight_id'   => 'required',
-            '*.note'        => 'required'
+            '*.note'        => 'required',
+            '*.Time_to_go'        => 'required',
+            '*.Arrival_time' => 'required'
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);

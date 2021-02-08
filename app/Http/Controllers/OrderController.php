@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NotificationsEvent;
+use App\Events\AdminNotificationEvent;
 
 use App\Models\Notifications;
 use App\Models\Order;
@@ -113,7 +113,7 @@ class OrderController extends Controller
             'seen' => 0
         ]);
         $get = Notifications::find($notification->id);
-        broadcast(new NotificationsEvent($get));
+        broadcast(new AdminNotificationEvent($get));
         $passengers = $request['passengers'];
 
         // in the request get array called passengers
