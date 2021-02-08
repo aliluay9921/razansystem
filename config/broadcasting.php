@@ -42,7 +42,7 @@ return [
                 'port' => 6001,
                 'scheme' => 'http',
                 'cluster' => 'mt1',
-                // 'useTLS' => true
+                'useTLS' => false
             ],
         ],
 
