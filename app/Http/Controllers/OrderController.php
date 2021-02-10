@@ -103,6 +103,7 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id
         ]);
         $employee = User::select('id', 'status')->where('status', 1)->first();
+
         $notification =  Notifications::create([
             'type' => 0,
             'name' => 'انشاء طلب بواسطة مستخم ',
@@ -112,7 +113,8 @@ class OrderController extends Controller
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
-        $get = Notifications::find($notification->id);
+        $get = Notifications::where("id", "=", $notification->id)->with('order', 'order.passengers', 'order.fromLocation', 'order.toLocation', 'user')->get()->first();
+
         broadcast(new AdminNotificationEvent($get));
         $passengers = $request['passengers'];
 

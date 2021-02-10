@@ -19,6 +19,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 
 
-Broadcast::channel('notification', function ($user) {
+Broadcast::channel('notification-admin', function ($user) {
     return true;
 });

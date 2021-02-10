@@ -34,6 +34,6 @@ class AdminNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('notification-admin');
+        return new PrivateChannel('notification-admin');
     }
 }

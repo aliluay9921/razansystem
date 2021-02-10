@@ -40,7 +40,7 @@ class NotificationsEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notifications' . auth()->user()->id);
-        // return new PresenceChannel('notifications');
+        // return new PrivateChannel('notifications');
+        return new Channel('notifications');
     }
 }

@@ -56,8 +56,14 @@ class flightplanController extends Controller
         }
         // الركوست اجة بي اكثر من مرة يدخل لازم اسوي لوب عليه حتى اكدر اشغلة
         // $employee=User::select('id','status')->where('status',1)->first();
-        $order = Order::select('user_id')->where('id', $requests[0]['order_id'])->first();
+        $order = Order::where('id', $requests[0]['order_id'])->first();
 
+        $seen = $order->notifications()->where("type", 0)->first();
+        $seen->update(
+            [
+                'seen' => true
+            ]
+        );
         foreach ($requests as $request) {
             $store = Flightplan::create($request);
         }

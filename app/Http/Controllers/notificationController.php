@@ -30,7 +30,7 @@ class notificationController extends Controller
     }
     public function getemployee()
     {
-        $get = Notifications::where('type', 0)->orderByDesc('created_at')->with('order', 'order.passengers', 'order.fromLocation', 'order.toLocation', 'user');
+        $get = Notifications::where('type', 0)->where("seen", "=", false)->orderByDesc('created_at')->with('order', 'order.passengers', 'order.fromLocation', 'order.toLocation', 'user');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))

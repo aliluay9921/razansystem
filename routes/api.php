@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Events\NotificationsEvent;
+use App\Events\AdminNotificationEvent;
 //TODO:: Seed notification please
 
 //TODO:: birth_day suggest add to passenger
@@ -67,6 +67,7 @@ route::middleware(['auth:api'])->group(function () {
 //     return response()->json(\App\Models\Notifications::get(), 200);
 // });
 Route::get('/fire', function () {
-    broadcast(new NotificationsEvent('test', 'it Works'));
-    return 'fired';
+    broadcast(new AdminNotificationEvent('test'));
+    return response()->json(["test"], 200);
 });
+Broadcast::routes(['middleware' => ['auth:api']]);
