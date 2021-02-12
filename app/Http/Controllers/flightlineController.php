@@ -45,7 +45,7 @@ class flightlineController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'id'   => 'required',
-            'name' => 'unique:flightlines|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
+            'name' => 'regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
@@ -54,7 +54,7 @@ class flightlineController extends Controller
         if (array_key_exists('new_image', $request)) {
             $request['image'] = $this->uploadPicture($request['new_image'], '/image/');
         } elseif (!array_key_exists('image', $request)) {
-            $request['image'] = null;
+            $request['image'] = 'null';
         } elseif (array_key_exists('image', $request)) {
             $request['image'] =  $request['image'];
         }

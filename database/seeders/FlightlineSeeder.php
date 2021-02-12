@@ -21,28 +21,28 @@ class FlightlineSeeder extends Seeder
         DB::table('Flightlines')->insert([
             'id' => Uuid::uuid4()->toString(),
             'Name' => 'Iraqi Airlines',
-            'image' => '/image/download.jfif',
+            'image' => '/image/1607949921ht.jpeg',
         ]);
         DB::table('Flightlines')->insert([
             'id' => Uuid::uuid4()->toString(),
             'Name' => 'Turkish Airlines',
-            'image' => '/image/download(2).jfif',
+            'image' => '/image/1607949921ht.jpeg',
         ]);
         DB::table('Flightlines')->insert([
             'id' => Uuid::uuid4()->toString(),
             'Name' => 'Qatar Airlines',
-            'image' => '/image/download(1).jfif',
+            'image' => '/image/1607949921ht.jpeg',
         ]);
 
         DB::table('Flightlines')->insert([
             'id' => Uuid::uuid4()->toString(),
             'Name' => 'Jordan Airlines',
-            'image' => '/image/download(4).jfif',
+            'image' => '/image/1607949921ht.jpeg',
         ]);
         DB::table('Flightlines')->insert([
             'id' => Uuid::uuid4()->toString(),
             'Name' => 'Emirates Airlines',
-            'image' => '/image/download(3).jfif',
+            'image' => '/image/1607949921ht.jpeg',
         ]);
     }
 }

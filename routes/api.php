@@ -49,6 +49,8 @@ route::middleware(['auth:api'])->group(function () {
 
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
+    route::put('countary', [\App\Http\Controllers\CountaryController::class, 'update']);
+    route::delete('countary', [\App\Http\Controllers\CountaryController::class, 'delete']);
 
     route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall'])->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);

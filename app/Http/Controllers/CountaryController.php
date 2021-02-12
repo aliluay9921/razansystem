@@ -25,5 +25,19 @@ class CountaryController extends Controller
     {
         $request = $request->json()->all();
         $countary = countary::create($request);
+        return $this->sendresponse(200, 'add country successfully', [], $countary);
+    }
+    public function update(Request $request)
+    {
+        $request = $request->json()->all();
+        $countary = countary::find($request['id'])->update($request);
+        return $this->sendresponse(200, 'update country successfully', [], $countary);
+    }
+    public function delete(Request $request)
+    {
+        $request = $request->json()->all();
+        $countary = countary::find($request['id'])->delete();
+
+        return $this->sendresponse(200, 'delete successfully', [], $countary);
     }
 }
