@@ -44,9 +44,11 @@ route::middleware(['auth:api'])->group(function () {
 
     route::post('notifications', [\App\Http\Controllers\notificationController::class, 'store']);
     route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
+    //getBroadCast
+    route::get('notifications_admin_employee', [\App\Http\Controllers\notificationController::class, 'getBroadCast'])->middleware('admin');
     route::get('notifications_employee', [\App\Http\Controllers\notificationController::class, 'getemployee'])->middleware('admin');
     route::post('notificationsbrodcast', [\App\Http\Controllers\notificationController::class, 'sendall'])->middleware('admin');
-
+    route::put('seen', [\App\Http\Controllers\notificationController::class, 'markSeen'])->middleware('admin');
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
     route::put('countary', [\App\Http\Controllers\CountaryController::class, 'update']);

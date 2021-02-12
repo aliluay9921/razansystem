@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\notifications as EventsNotifications;
-use App\Events\NotificationsEvent;
+use App\Events\AdminNotificationEvent;
 use Illuminate\Http\Request;
 use App\Models\Notifications;
 use App\Models\User;
@@ -38,15 +38,41 @@ class notificationController extends Controller
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
         return $this->sendresponse(200, 'get notification employee successfuly', [], $res["model"], null, $res["count"]);
     }
-
+    public function getBroadCast()
+    {
+        $get = Notifications::where('type', 2)->orderByDesc('created_at');
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'get notification admin  successfuly', [], $res["model"], null, $res["count"]);
+    }
+    public function markSeen(Request $request)
+    {
+        $request = $request->json()->all();
+        $validator = Validator::make($request, [
+            'id'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendresponse(401, 'error validation', $validator->errors(), [false]);
+        }
+        $notification = Notifications::where("id",  $request['id'])->first();
+        $notification->update(
+            [
+                'seen' => true
+            ]
+        );
+        return $this->sendresponse(200, 'notification seen sucessfully', [], [true]);
+    }
     public function store(Request $request)
     {
         $request = $request->json()->all();
         $validator = Validator::make($request, [
-            'name '      => 'required',
+            'name'      => 'required',
             'description' => 'required',
             'to_user'    => 'required',
-            'from_user'  => 'required'
+
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
@@ -59,8 +85,9 @@ class notificationController extends Controller
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
-        $get = Notifications::find($notification->id);
-        broadcast(new NotificationsEvent($get, auth()->user()));
+        $get = Notifications::where("id", "=", $notification->id)->first();
+
+        broadcast(new AdminNotificationEvent($get));
         return $this->sendresponse(200, 'send notification successfuly', [], []);
     }
     public function sendall(Request $request)

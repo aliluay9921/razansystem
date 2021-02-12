@@ -20,5 +20,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 
 Broadcast::channel('notification-admin', function ($user) {
-    return true;
+
+    return $user->status === 1;
 });
