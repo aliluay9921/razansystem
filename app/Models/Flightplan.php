@@ -22,4 +22,8 @@ class Flightplan extends Model
     {
         return $this->belongsTo('App\Models\Order');
     }
+    public function flghtline()
+    {
+        return $this->belongsTo('App\Models\Flightline');
+    }
 }

@@ -106,4 +106,18 @@ class notificationController extends Controller
         }
         return $this->sendresponse(200, 'send notification to all users successfuly', [], []);
     }
+    public function getSelectedFlightplan()
+    {
+        $get = Notifications::where('type', 5)->with(['user', 'order', 'order.toLocation', 'order.fromLocation', 'order.passengers', 'order.flightplans' => function ($q) {
+            $q->where('selected', true);
+        }])->orderByDesc('created_at');
+
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+
+        return $this->sendresponse(200, 'get notification successfuly', [], $res["model"]->append('flight_line'), null, $res["count"]);
+    }
 }

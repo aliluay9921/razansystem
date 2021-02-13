@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Events\AdminNotificationEvent;
+use Illuminate\Support\Facades\Broadcast;
 //TODO:: Seed notification please
 
 //TODO:: birth_day suggest add to passenger
@@ -10,6 +11,7 @@ route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'reg
 route::post('loginadmin', [\App\Http\Controllers\AuthCountroller::class, 'loginadmin']);
 
 route::middleware(['auth:api'])->group(function () {
+
     route::post('register', [\App\Http\Controllers\AuthCountroller::class, 'register'])->middleware('guest');
     route::post('login', [\App\Http\Controllers\AuthCountroller::class, 'login']);
 
@@ -44,10 +46,12 @@ route::middleware(['auth:api'])->group(function () {
 
     route::post('notifications', [\App\Http\Controllers\notificationController::class, 'store']);
     route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
+    route::get('notificationsSelected', [\App\Http\Controllers\notificationController::class, 'getSelectedFlightplan'])->middleware('admin');
     //getBroadCast
     route::get('notifications_admin_employee', [\App\Http\Controllers\notificationController::class, 'getBroadCast'])->middleware('admin');
     route::get('notifications_employee', [\App\Http\Controllers\notificationController::class, 'getemployee'])->middleware('admin');
     route::post('notificationsbrodcast', [\App\Http\Controllers\notificationController::class, 'sendall'])->middleware('admin');
+
     route::put('seen', [\App\Http\Controllers\notificationController::class, 'markSeen'])->middleware('admin');
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
@@ -66,6 +70,8 @@ route::middleware(['auth:api'])->group(function () {
     route::get('posation', [\App\Http\Controllers\posationController::class, 'get']);
     route::post('posation', [\App\Http\Controllers\posationController::class, 'store'])->middleware('admin');
     route::delete('posation', [\App\Http\Controllers\posationController::class, 'delete'])->middleware('admin');
+
+    route::get('dashboardCount', [\App\Http\Controllers\dashboardController::class, 'get'])->middleware('admin');
 });
 // Route::get('all', function () {
 //     return response()->json(\App\Models\Notifications::get(), 200);

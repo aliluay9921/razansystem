@@ -25,6 +25,7 @@ class Notifications extends Model
             return null;
         $flightplan = $order->flightplans()->where('selected', true)->first();
         if ($flightplan == null) return null;
+
         return  Flightline::find($flightplan->flight_id);
     }
     public function order()

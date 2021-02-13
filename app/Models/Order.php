@@ -16,6 +16,10 @@ class Order extends Model
         'expired', 'fromdate',
         'returndate', 'user_id'
     ];
+    public function getcabinAttribute($val)
+    {
+        return $val == 1 ? "رجال اعمال " : "اقتصادي";
+    }
 
     public function passengers()
     {
