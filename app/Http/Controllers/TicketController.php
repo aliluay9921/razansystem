@@ -17,16 +17,26 @@ class TicketController extends Controller
 {
     use sendresponse, paging;
 
-    public function getall()
+    public function getAll()
     {
 
-        $get = ticket::select('id', 'ticket_id', 'order_id', 'flightline_id', 'created_at', 'updated_at');
+        $get = ticket::where('active', false);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
             $_GET['limit'] = 10;
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
-        return $this->sendresponse(200, 'get successfully ticket', [], $res["model"], null, $res["count"]);
+        return $this->sendresponse(200, 'get successfully ticket all ', [], $res["model"], null, $res["count"]);
+    }
+    public function getAllIssus()
+    {
+        $get = ticket::where('active', true);
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'get successfully ticket all issue', [], $res["model"], null, $res["count"]);
     }
 
     public function get()
@@ -43,9 +53,6 @@ class TicketController extends Controller
     {
 
         $request = $request->json()->all();
-        //   راح يحول الركوست الى array
-        // $request['image'] واتعامل ويا على انه مصفوفة
-        // exists:orders,id  هاي تفخص ال اذا موجود او لا  id
         $validator = Validator::make($request, [
             'order_id' => 'required|exists:orders,id',
             'ticket_id' => 'required',
@@ -80,5 +87,14 @@ class TicketController extends Controller
         } else {
             return $this->sendresponse(401, 'this order has ticket ', [], []);
         }
+    }
+
+    public function Issue(Request $request)
+    {
+        $request = $request->json()->all();
+        ticket::find($request['id'])->update([
+            'active' => true
+        ]);
+        return $this->sendresponse(200, 'issue ticket  ', [], ticket::find($request['id']));
     }
 }

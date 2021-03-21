@@ -18,6 +18,7 @@ class CreateTicketsTable extends Migration
             $table->string('ticket_id');
             $table->uuid('order_id');
             $table->uuid('flightline_id');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

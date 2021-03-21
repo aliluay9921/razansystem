@@ -50,11 +50,11 @@ class flightlineController extends Controller
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-
+        $get = Flightline::find($request['id']);
         if (array_key_exists('new_image', $request)) {
             $request['image'] = $this->uploadPicture($request['new_image'], '/image/');
         } elseif (!array_key_exists('image', $request)) {
-            $request['image'] = 'null';
+            $request['image'] = $get->image;
         } elseif (array_key_exists('image', $request)) {
             $request['image'] =  $request['image'];
         }
@@ -62,7 +62,7 @@ class flightlineController extends Controller
             'name' => $request['name'],
             'image' => $request['image']
         ]);
-        $get = Flightline::find($request['id']);
+
         return $this->sendresponse(200, 'update successfully flightline', [], $get);
     }
     public function delete(Request $request)

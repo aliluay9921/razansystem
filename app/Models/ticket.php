@@ -12,7 +12,7 @@ class ticket extends Model
 
     protected $fillable = [
         'ticket_id', 'order_id',
-        'flightline_id'
+        'flightline_id', 'active'
     ];
     protected $appends = ['flight_line'];
 

@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Events\AdminNotificationEvent;
 use Illuminate\Support\Facades\Broadcast;
-//TODO:: Seed notification please
 
-//TODO:: birth_day suggest add to passenger
+
+
 route::post('registerguest', [\App\Http\Controllers\AuthCountroller::class, 'registerguest']);
 route::post('loginadmin', [\App\Http\Controllers\AuthCountroller::class, 'loginadmin']);
 
@@ -27,8 +27,6 @@ route::middleware(['auth:api'])->group(function () {
 
     route::get('orderadmin', [\App\Http\Controllers\OrderController::class, 'get']);
     route::get('order', [\App\Http\Controllers\OrderController::class, 'getuser']);
-
-
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
@@ -47,35 +45,36 @@ route::middleware(['auth:api'])->group(function () {
     route::post('notifications', [\App\Http\Controllers\notificationController::class, 'store']);
     route::get('notifications', [\App\Http\Controllers\notificationController::class, 'get']);
     route::get('notificationsSelected', [\App\Http\Controllers\notificationController::class, 'getSelectedFlightplan'])->middleware('admin');
-    //getBroadCast
     route::get('notifications_admin_employee', [\App\Http\Controllers\notificationController::class, 'getBroadCast'])->middleware('admin');
     route::get('notifications_employee', [\App\Http\Controllers\notificationController::class, 'getemployee'])->middleware('admin');
     route::post('notificationsbrodcast', [\App\Http\Controllers\notificationController::class, 'sendall'])->middleware('admin');
-
     route::put('seen', [\App\Http\Controllers\notificationController::class, 'markSeen'])->middleware('admin');
+
     route::get('countary', [\App\Http\Controllers\CountaryController::class, 'get']);
     route::post('countary', [\App\Http\Controllers\CountaryController::class, 'store'])->middleware('throttle:1500,1');
     route::put('countary', [\App\Http\Controllers\CountaryController::class, 'update']);
     route::delete('countary', [\App\Http\Controllers\CountaryController::class, 'delete']);
 
-    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getall'])->middleware('admin');
+    route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getAll'])->middleware('admin');
+    route::get('getAllIssus', [\App\Http\Controllers\TicketController::class, 'getAllIssus'])->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);
     route::post('ticket', [\App\Http\Controllers\TicketController::class, 'store']);
+    route::put('ticket', [\App\Http\Controllers\TicketController::class, 'Issue']);
 
     route::get('discount', [\App\Http\Controllers\discountController::class, 'get']);
     route::post('discount', [\App\Http\Controllers\discountController::class, 'store'])->middleware('admin');
+    route::put('discount', [\App\Http\Controllers\discountController::class, 'update'])->middleware('admin');
     route::delete('discount', [\App\Http\Controllers\discountController::class, 'delete'])->middleware('admin');
     route::get('discount_soft', [\App\Http\Controllers\discountController::class, 'getsoft'])->middleware('admin');
 
     route::get('posation', [\App\Http\Controllers\posationController::class, 'get']);
     route::post('posation', [\App\Http\Controllers\posationController::class, 'store'])->middleware('admin');
+    route::put('posation', [\App\Http\Controllers\posationController::class, 'update'])->middleware('admin');
     route::delete('posation', [\App\Http\Controllers\posationController::class, 'delete'])->middleware('admin');
 
     route::get('dashboardCount', [\App\Http\Controllers\dashboardController::class, 'get'])->middleware('admin');
 });
-// Route::get('all', function () {
-//     return response()->json(\App\Models\Notifications::get(), 200);
-// });
+
 Route::get('/fire', function () {
     broadcast(new AdminNotificationEvent('test'));
     return response()->json(["test"], 200);

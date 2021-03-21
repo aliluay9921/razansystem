@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\discountflight;
 use App\Models\discount_flight;
 use App\Models\Flightline;
 use App\Traits\paging;
@@ -14,7 +15,7 @@ class discountController extends Controller
     use sendresponse, paging;
     public function get()
     {
-        $get = discount_flight::select('id', 'details', 'flightline_id', 'discount', 'miximum_number', 'current_user', 'minimum_number', 'expair', 'fromdate', 'returndate', 'type', 'from', 'to')->with(["flightline"]);
+        $get = discount_flight::with("flightline", 'toLocation', 'fromLocation');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
@@ -27,7 +28,7 @@ class discountController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
 
-            'details'       => 'required|alpha',
+            'details'       => 'required',
             'flightline_id'  => 'required|exists:flightlines,id',
             'discount'       => 'required|numeric',
             'miximum_number' => 'required|numeric',
@@ -38,14 +39,14 @@ class discountController extends Controller
             'returndate'     => 'required|date',
             // type => one way or two way
             'type'          => 'required',
-            'from'           => 'required|alpha',
-            'to'             => 'required|alpha',
+            'from'           => 'required',
+            'to'             => 'required',
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-        discount_flight::create($request);
-        return $this->sendresponse(200, 'insert successfully discount', [], []);
+        $addDiscount = discount_flight::create($request);
+        return $this->sendresponse(200, 'insert successfully discount', [], $addDiscount);
     }
     public function delete(Request $request)
     {
@@ -57,6 +58,23 @@ class discountController extends Controller
         } catch (\Throwable $th) {
             return $this->sendresponse(401, 'error delete', [], []);
         }
+    }
+    public function update(Request $request)
+    {
+        $request = $request->json()->all();
+        $validator = Validator::make($request, [
+            'flightline_id'  => 'exists:flightlines,id',
+            'discount'       => 'numeric',
+            'miximum_number' => 'numeric',
+            'minimum_number' => 'numeric',
+            'fromdate'       => 'date',
+            'returndate'     => 'date',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendresponse(401, 'error validation', $validator->errors(), []);
+        }
+        $updateDiscount = discount_flight::find($request['id'])->update($request);
+        return $this->sendresponse(200, 'update successfully discountFlight', [], $updateDiscount);
     }
 
     public function getsoft()

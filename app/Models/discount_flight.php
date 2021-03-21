@@ -25,4 +25,12 @@ class discount_flight extends Model
     {
         return $this->belongsTo('App\Models\Flightline');
     }
+    public function fromLocation()
+    {
+        return $this->belongsTo('App\Models\countary', 'from');
+    }
+    public function toLocation()
+    {
+        return $this->belongsTo('App\Models\countary', 'to');
+    }
 }

@@ -8,7 +8,7 @@ use App\Models\posation_avillable;
 use App\Traits\Helper;
 use App\Traits\paging;
 use Illuminate\Support\Facades\Validator;
-
+use PhpParser\Node\Expr\AssignOp\Pow;
 
 class posationController extends Controller
 {
@@ -45,8 +45,26 @@ class posationController extends Controller
             $request['image'] =  $request['image'];
         }
 
-        posation_avillable::create($request);
-        return $this->sendresponse(200, 'insert successfully posation_avillable', [], []);
+        $add = posation_avillable::create($request);
+        return $this->sendresponse(200, 'insert successfully posation_avillable', [], $add);
+    }
+    public function update(Request $request)
+    {
+        $request = $request->json()->all();
+        $get = posation_avillable::find($request['id']);
+        if (array_key_exists('new_image', $request)) {
+            $request['image'] = $this->uploadPicture($request['new_image'], '/image/');
+        } elseif (!array_key_exists('image', $request)) {
+            $request['image'] = $get->image;
+        } elseif (array_key_exists('image', $request)) {
+            $request['image'] =  $request['image'];
+        }
+        $update = posation_avillable::find($request['id'])->update([
+            'countary_id' => $request['countary_id'],
+            'image' => $request['image']
+        ]);
+
+        return $this->sendresponse(200, 'update successfully posation_avillable', [], $get);
     }
 
     public function delete(Request $request)
