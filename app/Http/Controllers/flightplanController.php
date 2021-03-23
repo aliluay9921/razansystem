@@ -48,7 +48,7 @@ class flightplanController extends Controller
             '*.price'       => 'required|Numeric',
             '*.flight_id'   => 'required',
             '*.note'        => 'required',
-            '*.Time_to_go'        => 'required',
+            '*.Time_to_go'  => 'required',
             '*.Arrival_time' => 'required'
         ]);
         if ($validator->fails()) {

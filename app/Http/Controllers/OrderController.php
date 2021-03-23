@@ -80,14 +80,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request = $request->json()->all();
-
         $validator = Validator::make($request, [
             'from' => 'required',
             'to' => 'required',
             'cabin' => 'required',
             'fromdate' => 'required|date|after_or_equal:today',
             'returndate' => 'required|date|after:fromdate',
-            'passengers.*.name' => 'required|alpha',
+            'passengers.*.first_name' => 'required',
+            'passengers.*.last_name' => 'required',
             'passengers.*.passport_No' => 'required'
         ]);
         // ['passengers.*.passport_No'=>'required' ]  لان عدنة بل ركوست ارري بداخل ركوست ف لازم نسوي هل طريقة
@@ -163,5 +163,22 @@ class OrderController extends Controller
 
             return $this->sendresponse(200, 'delete not successfully', [], $order);
         }
+    }
+    public function savePNR(Request $request)
+    {
+        $request = $request->json()->all();
+        Order::find($request['id'])->update([
+            'PNR' => $request['PNR']
+        ]);
+        $order = Order::find($request['id']);
+        Notifications::create([
+            'type' => 6,
+            'name' => 'تم ارسال الرمز الخاص بك',
+            'description' => $request['PNR'],
+            'to_user' => $order->user_id,
+            'from_user' => auth()->user()->id,
+            'seen' => 0
+        ]);
+        return $this->sendresponse(200, 'send pnr to user', [], []);
     }
 }

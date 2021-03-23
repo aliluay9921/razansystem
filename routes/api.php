@@ -28,8 +28,10 @@ route::middleware(['auth:api'])->group(function () {
     route::get('orderadmin', [\App\Http\Controllers\OrderController::class, 'get']);
     route::get('order', [\App\Http\Controllers\OrderController::class, 'getuser']);
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
+    route::post('savePNR', [\App\Http\Controllers\OrderController::class, 'savePNR'])->middleware('admin');
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
     route::delete('order', [\App\Http\Controllers\OrderController::class, 'delete'])->middleware('admin');
+
 
     route::get('passengers', [\App\Http\Controllers\passengersController::class, 'get'])->middleware('admin');
     route::get('passengers_soft', [\App\Http\Controllers\passengersController::class, 'getsoft'])->middleware('admin');

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\deletePnr;
 use App\Console\Commands\discountflight;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\expier_flightplan;
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         expiration::class,
         expier_flightplan::class,
-        discountflight::class
+        discountflight::class,
+        deletePnr::class
     ];
 
     /**
@@ -33,6 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('order:expire')->daily();
         $schedule->command('flightplanexpire:expire')->hourly();
         $schedule->command('discount:expier')->daily();
+        $schedule->command('PNR:expire')->daily();
     }
 
     /**

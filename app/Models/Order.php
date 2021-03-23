@@ -14,7 +14,7 @@ class Order extends Model
         'from', 'to',
         'cabin', 'active',
         'expired', 'fromdate',
-        'returndate', 'user_id'
+        'returndate', 'user_id', 'PNR'
     ];
 
 
@@ -43,5 +43,9 @@ class Order extends Model
     public function toLocation()
     {
         return $this->belongsTo('App\Models\countary', 'to');
+    }
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }

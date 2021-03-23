@@ -17,7 +17,8 @@ class CreatePassengersTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('order_id');
             $table->softDeletes();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->integer('type');
             $table->date('birth_day')->nullable();
             $table->integer('gender');

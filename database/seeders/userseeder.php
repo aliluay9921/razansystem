@@ -18,8 +18,8 @@ class userseeder extends Seeder
     {
         DB::table('users')->insert([
             'id'                => Uuid::uuid4()->toString(),
-            'firstName'          => 'ali',
-            'lastName'          => 'luay',
+            'first_name'          => 'ali',
+            'last_name'          => 'luay',
             'UserName'          => 'aliali2',
             'password'          => Hash::make('11111111'),
             'PhoneNumber'       => '077110101010',
@@ -29,8 +29,8 @@ class userseeder extends Seeder
         ]);
         DB::table('users')->insert([
             'id'                => Uuid::uuid4()->toString(),
-            'firstName'          => 'ibrahim',
-            'lastName'          => 'ayad',
+            'first_name'          => 'ibrahim',
+            'last_name'          => 'ayad',
             'UserName'          => 'aliali1',
             'password'          => Hash::make('11111111'),
             'PhoneNumber'       => '077110101010',
@@ -40,8 +40,8 @@ class userseeder extends Seeder
         ]);
         DB::table('users')->insert([
             'id'                => Uuid::uuid4()->toString(),
-            'firstName'          => 'yousuf',
-            'lastName'          => 'abdalstar',
+            'first_name'          => 'yousuf',
+            'last_name'          => 'abdalstar',
             'UserName'          => 'aliali',
             'password'          => Hash::make('11111111'),
             'PhoneNumber'       => '077110101010',

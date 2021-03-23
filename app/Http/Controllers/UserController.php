@@ -14,15 +14,15 @@ class UserController extends Controller
     use sendresponse, paging;
     public function alluser()
     {
-        $alluser = User::select('id', 'firstName', 'lastName', 'PhoneNumber', 'UserName', 'password', 'email_verified_at', 'remember_token', 'updated_at', 'created_at', 'status', 'active');
+        $alluser = User::select('id', 'first_name', 'last_name', 'PhoneNumber', 'UserName', 'password', 'email_verified_at', 'remember_token', 'updated_at', 'created_at', 'status', 'active');
         if (isset($_GET['id'])) {
             $alluser->where('id', $_GET['id']);
         }
-        if (isset($_GET['firstName'])) {
-            $alluser->where('firstName', $_GET['firstName']);
+        if (isset($_GET['first_name'])) {
+            $alluser->where('first_name', $_GET['first_name']);
         }
-        if (isset($_GET['lastName'])) {
-            $alluser->where('lastName', $_GET['lastName']);
+        if (isset($_GET['last_name'])) {
+            $alluser->where('last_name', $_GET['last_name']);
         }
         if (isset($_GET['UserName'])) {
             $alluser->where('UserName', $_GET['UserName']);
@@ -53,8 +53,8 @@ class UserController extends Controller
     {
         $request = $request->json()->all();
         $validator = Validator::make($request, [
-            'fisrtName' => 'required|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
-            'lastName' => 'required|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
+            'first_name' => 'required|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
+            'last_name' => 'required|regex:/(^[A-Z a-z\x{0621}-\x{064A}]+$)+/u',
             'UserName' => 'required|unique:users,UserName,' . auth()->user()->id,
             'password' => 'required|min:6|max:20',
             'PhoneNumber' => 'required|min:10|max:14'
@@ -63,8 +63,8 @@ class UserController extends Controller
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
         $update = User::find(auth()->user()->id)->Update([
-            'fisrtName' => $request['fisrtName'],
-            'lastName' => $request['lastName'],
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
             'UserName' => $request['UserName'],
             'password' => Hash::make($request['password']),
             'PhoneNumber' => $request['PhoneNumber'],

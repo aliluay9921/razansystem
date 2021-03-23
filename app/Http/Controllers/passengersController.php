@@ -30,7 +30,8 @@ class passengersController extends Controller
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'id'   => 'required',
-            'name' => 'required|alpha',
+            'firstName' => 'required',
+            'lastName' => 'required',
             'type' => 'required',
             'gender' => 'required',
             'passport_No' => 'required'
