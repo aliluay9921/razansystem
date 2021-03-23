@@ -14,12 +14,15 @@ class UserController extends Controller
     use sendresponse, paging;
     public function alluser()
     {
-        $alluser = User::select('id', 'FullName', 'PhoneNumber', 'UserName', 'password', 'email_verified_at', 'remember_token', 'updated_at', 'created_at', 'status', 'active');
+        $alluser = User::select('id', 'firstName', 'lastName', 'PhoneNumber', 'UserName', 'password', 'email_verified_at', 'remember_token', 'updated_at', 'created_at', 'status', 'active');
         if (isset($_GET['id'])) {
             $alluser->where('id', $_GET['id']);
         }
-        if (isset($_GET['FullName'])) {
-            $alluser->where('FullName', $_GET['FullName']);
+        if (isset($_GET['firstName'])) {
+            $alluser->where('firstName', $_GET['firstName']);
+        }
+        if (isset($_GET['lastName'])) {
+            $alluser->where('lastName', $_GET['lastName']);
         }
         if (isset($_GET['UserName'])) {
             $alluser->where('UserName', $_GET['UserName']);
