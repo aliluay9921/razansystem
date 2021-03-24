@@ -38,7 +38,7 @@ class deletePnr extends Command
      */
     public function handle()
     {
-        $order = Order::whereNotNull('PNR')->get();
+        $order = Order::whereNotNull('pnr')->get();
         $order->delete();
     }
 }

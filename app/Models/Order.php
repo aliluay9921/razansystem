@@ -14,7 +14,7 @@ class Order extends Model
         'from', 'to',
         'cabin', 'active',
         'expired', 'fromdate',
-        'returndate', 'user_id', 'PNR'
+        'returndate', 'user_id', 'pnr'
     ];
 
 

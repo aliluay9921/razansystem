@@ -31,7 +31,7 @@ class TicketController extends Controller
     public function getTicketPnr()
     {
         $get = ticket::with(['orders' => function ($q) {
-            $q->whereNotNull('PNR');
+            $q->whereNotNull('pnr');
         }]);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;

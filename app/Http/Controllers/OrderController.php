@@ -78,7 +78,7 @@ class OrderController extends Controller
     }
     public function orderPnr()
     {
-        $Orders = Order::whereNotNull('PNR')->with('toLocation', 'fromLocation');
+        $Orders = Order::whereNotNull('pnr')->with('toLocation', 'fromLocation');
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
@@ -178,7 +178,7 @@ class OrderController extends Controller
     {
         $request = $request->json()->all();
         Order::find($request['id'])->update([
-            'PNR' => $request['PNR']
+            'pnr' => $request['PNR']
         ]);
         $order = Order::find($request['id']);
         Notifications::create([

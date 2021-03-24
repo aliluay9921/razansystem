@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->uuid('user_id');
             $table->uuid('to');
             $table->integer('cabin');
-            $table->integer('PNR')->nullable();
+            $table->string('pnr')->nullable(); // كسختك علي
             $table->integer('active')->nullable()->default(0);
             $table->integer('expired')->nullable()->default(0);
             $table->date('fromdate')->nullable();
