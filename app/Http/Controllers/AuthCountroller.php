@@ -17,8 +17,8 @@ class AuthCountroller extends Controller
     {
         $request = $request->json()->all();
         $validator = Validator::make($request, [
-            'fisrtName' => 'required',
-            'lastName' => 'required',
+            'fisrt_name' => 'required',
+            'last_name' => 'required',
             'UserName' => 'required|unique:users',
             'password' => 'required|min:6|max:20',
             'PhoneNumber' => 'required|min:10|max:14'
@@ -30,8 +30,8 @@ class AuthCountroller extends Controller
         // if user guest
         $user_id = auth()->user()->id;
         $user = User::find($user_id)->update([
-            'fisrtName' => $request['fisrtName'],
-            'lastName' => $request['lastName'],
+            'fisrt_name' => $request['fisrt_name'],
+            'last_name' => $request['last_name'],
             'UserName' => $request['UserName'],
             'password' => bcrypt($request['password']),
             'PhoneNumber' => $request['PhoneNumber'],

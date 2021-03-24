@@ -76,6 +76,16 @@ class OrderController extends Controller
         $res = $this->paging($Orders,  $_GET['skip'],  $_GET['limit']);
         return $this->sendresponse(200, 'auth Orders', [], $res["model"], null, $res["count"]);
     }
+    public function orderPnr()
+    {
+        $Orders = Order::whereNotNull('PNR')->with('toLocation', 'fromLocation');
+        if (!isset($_GET['skip']))
+            $_GET['skip'] = 0;
+        if (!isset($_GET['limit']))
+            $_GET['limit'] = 10;
+        $res = $this->paging($Orders,  $_GET['skip'],  $_GET['limit']);
+        return $this->sendresponse(200, 'all Orders has Pnr', [], $res["model"], null, $res["count"]);
+    }
 
     public function store(Request $request)
     {

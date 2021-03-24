@@ -27,6 +27,7 @@ route::middleware(['auth:api'])->group(function () {
 
     route::get('orderadmin', [\App\Http\Controllers\OrderController::class, 'get']);
     route::get('order', [\App\Http\Controllers\OrderController::class, 'getuser']);
+    route::get('orderPnr', [\App\Http\Controllers\OrderController::class, 'orderPnr']);
     route::post('order', [\App\Http\Controllers\OrderController::class, 'store']);
     route::post('savePNR', [\App\Http\Controllers\OrderController::class, 'savePNR'])->middleware('admin');
     route::put('order', [\App\Http\Controllers\OrderController::class, 'update']);
@@ -58,7 +59,7 @@ route::middleware(['auth:api'])->group(function () {
     route::delete('countary', [\App\Http\Controllers\CountaryController::class, 'delete']);
 
     route::get('ticketall', [\App\Http\Controllers\TicketController::class, 'getAll'])->middleware('admin');
-    route::get('getAllIssus', [\App\Http\Controllers\TicketController::class, 'getAllIssus'])->middleware('admin');
+    route::get('getTicketPnr', [\App\Http\Controllers\TicketController::class, 'getTicketPnr'])->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);
     route::post('ticket', [\App\Http\Controllers\TicketController::class, 'store']);
     route::put('ticket', [\App\Http\Controllers\TicketController::class, 'Issue']);

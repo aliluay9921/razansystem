@@ -28,15 +28,17 @@ class TicketController extends Controller
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
         return $this->sendresponse(200, 'get successfully ticket all ', [], $res["model"], null, $res["count"]);
     }
-    public function getAllIssus()
+    public function getTicketPnr()
     {
-        $get = ticket::where('active', true);
+        $get = ticket::with(['orders' => function ($q) {
+            $q->whereNotNull('PNR');
+        }]);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
             $_GET['limit'] = 10;
         $res = $this->paging($get,  $_GET['skip'],  $_GET['limit']);
-        return $this->sendresponse(200, 'get successfully ticket all issue', [], $res["model"], null, $res["count"]);
+        return $this->sendresponse(200, 'get successfully ticket has PNR', [], $res["model"], null, $res["count"]);
     }
 
     public function get()
@@ -51,7 +53,6 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
-
         $request = $request->json()->all();
         $validator = Validator::make($request, [
             'order_id' => 'required|exists:orders,id',
@@ -62,7 +63,6 @@ class TicketController extends Controller
         }
         $order = Order::find($request['order_id']);
         $flightplan = $order->flightplans()->where('selected', true)->first();
-
         if ($order->active == 0) {
             $create = ticket::create([
                 'ticket_id' => $request['ticket_id'],
@@ -74,8 +74,8 @@ class TicketController extends Controller
             $user_id = $order->user_id;
             $notification =  Notifications::create([
                 'type' => 4,
-                'name' => 'تم انشاء تذكرة',
-                'description' => 'ملاحظات',
+                'name' => '  تم انشاء تكت',
+                'description' => 'تم انشاء تكت',
                 'order_id' => $order->id,
                 'to_user' => $user_id,
                 'from_user' => auth()->user()->id,
