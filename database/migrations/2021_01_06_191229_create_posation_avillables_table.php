@@ -18,6 +18,7 @@ class CreatePosationAvillablesTable extends Migration
             $table->uuid('countary_id');
             $table->softDeletes();
             $table->string('image')->nullable();
+            $table->foreign('countary_id')->references('id')->on('countaries')->onDelete('cascade');
             $table->timestamps();
         });
     }

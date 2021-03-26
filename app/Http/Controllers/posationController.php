@@ -16,7 +16,7 @@ class posationController extends Controller
 
     public function get()
     {
-        $get = posation_avillable::select('id', 'countary_id', 'image')->with(["countary"]);
+        $get = posation_avillable::with(["countary"]);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))

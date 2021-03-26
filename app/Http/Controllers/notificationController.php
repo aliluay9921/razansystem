@@ -71,17 +71,18 @@ class notificationController extends Controller
         $validator = Validator::make($request, [
             'name'      => 'required',
             'description' => 'required',
-            'to_user'    => 'required',
+
 
         ]);
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-        $notification =   Notifications::create([
+        $user = User::where('status', 1)->first();
+        $notification = Notifications::create([
             'type' => 2,
             'name' => $request['name'],
             'description' => $request['description'],
-            'to_user' => $request['to_user'],
+            'to_user' => $user->id,
             'from_user' => auth()->user()->id,
             'seen' => 0
         ]);
