@@ -48,4 +48,12 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
+    public function setfromdateAttribute($value)
+    {
+        $this->attributes['fromdate'] = strtr($value, array('٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4', '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9'));
+    }
+    public function setreturndateAttribute($value)
+    {
+        $this->attributes['returndate'] = strtr($value, array('٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4', '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9'));
+    }
 }
