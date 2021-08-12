@@ -78,7 +78,7 @@ class OrderController extends Controller
     }
     public function orderPnr()
     {
-        $Orders = Order::whereNotNull('pnr')->with('toLocation', 'fromLocation');
+        $Orders = Order::whereNotNull('pnr')->with('toLocation', 'fromLocation', "flightplans", "flightplans.flghtline");
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
         if (!isset($_GET['limit']))
@@ -182,7 +182,7 @@ class OrderController extends Controller
         ]);
         $order = Order::find($request['id']);
         Notifications::create([
-            'type' => 6,
+            'type' => 7,
             'name' => 'تم ارسال الرمز الخاص بك',
             'description' => $request['PNR'],
             'to_user' => $order->user_id,

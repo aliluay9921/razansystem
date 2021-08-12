@@ -64,7 +64,7 @@ class posationController extends Controller
             'image' => $request['image']
         ]);
 
-        return $this->sendresponse(200, 'update successfully posation_avillable', [], $get);
+        return $this->sendresponse(200, 'update successfully posation_avillable', [], posation_avillable::with("countary")->find($request['id']));
     }
 
     public function delete(Request $request)

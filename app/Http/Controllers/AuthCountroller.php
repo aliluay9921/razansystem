@@ -75,8 +75,6 @@ class AuthCountroller extends Controller
             'active' => 1
         ]);
         $token = $user->createToken('myApp')->accessToken;
-
-
         firbasetokens::create([
             'user_id' => $user->id,
             'token'   => $request['token']

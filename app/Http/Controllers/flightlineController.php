@@ -58,12 +58,13 @@ class flightlineController extends Controller
         } elseif (array_key_exists('image', $request)) {
             $request['image'] =  $request['image'];
         }
-        $update = Flightline::find($request['id'])->update([
+        Flightline::find($request['id'])->update([
             'name' => $request['name'],
             'image' => $request['image']
         ]);
+        $update_flight = Flightline::find($request['id']);
 
-        return $this->sendresponse(200, 'update successfully flightline', [], $get);
+        return $this->sendresponse(200, 'update successfully flightline', [], $update_flight);
     }
     public function delete(Request $request)
     {

@@ -62,6 +62,7 @@ route::middleware(['auth:api'])->group(function () {
     route::get('getTicketPnr', [\App\Http\Controllers\TicketController::class, 'getTicketPnr'])->middleware('admin');
     route::get('ticket', [\App\Http\Controllers\TicketController::class, 'get']);
     route::post('ticket', [\App\Http\Controllers\TicketController::class, 'store']);
+    route::get("get_ticket_by_pnr", [\App\Http\Controllers\TicketController::class, 'getTicketByPnr']);
     route::put('ticket', [\App\Http\Controllers\TicketController::class, 'Issue']);
 
     route::get('discount', [\App\Http\Controllers\discountController::class, 'get']);

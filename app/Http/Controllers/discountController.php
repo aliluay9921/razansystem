@@ -46,7 +46,8 @@ class discountController extends Controller
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
         $addDiscount = discount_flight::create($request);
-        return $this->sendresponse(200, 'insert successfully discount', [], $addDiscount);
+        $get_discount = discount_flight::with('flightline', "fromLocation", "toLocation")->find($addDiscount->id);
+        return $this->sendresponse(200, 'insert successfully discount', [], $get_discount);
     }
     public function delete(Request $request)
     {
@@ -73,7 +74,8 @@ class discountController extends Controller
         if ($validator->fails()) {
             return $this->sendresponse(401, 'error validation', $validator->errors(), []);
         }
-        $updateDiscount = discount_flight::find($request['id'])->update($request);
+        discount_flight::find($request['id'])->update($request);
+        $updateDiscount = discount_flight::with("flightline", "fromLocation", "toLocation")->find($request['id']);
         return $this->sendresponse(200, 'update successfully discountFlight', [], $updateDiscount);
     }
 

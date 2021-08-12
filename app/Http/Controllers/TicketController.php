@@ -20,6 +20,7 @@ class TicketController extends Controller
     public function getAll()
     {
 
+
         $get = ticket::where('active', false);
         if (!isset($_GET['skip']))
             $_GET['skip'] = 0;
@@ -92,6 +93,7 @@ class TicketController extends Controller
     public function Issue(Request $request)
     {
         $request = $request->json()->all();
+
         ticket::find($request['id'])->update([
             'active' => true
         ]);

@@ -20,6 +20,7 @@ class discount_flight extends Model
         'from', 'to', 'active'
     ];
     protected $dates = ['deleted_at'];
+    // protected $with = ['flightline', "fromLocation", "toLocation"];
 
     public function flightline()
     {
